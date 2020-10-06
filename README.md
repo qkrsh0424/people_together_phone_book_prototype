@@ -1,8 +1,8 @@
 # people_together_phone_book_prototype
 
-<h1>피플투게더 연락처 프로그램 외주업무 프로젝트</h1>
+<h3>피플투게더 연락처 프로그램 외주업무 프로젝트</h3>
 
-<h4>application.properties 세팅</h4>
+<h3>application.properties 세팅</h3>
 
 server.port=**PORT NUMBER**
 
