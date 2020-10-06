@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragment/header::header"></head>
+
+<body>
+    <div class="container mt-3 mb-3 pt-3 pb-3 text-center">
+        <form id="searchSubmit">
+            <div class="row">
+                <div class="col">
+                    <input id="searchAddress" class="form-control" name="searchAddress" value="" placeholder="주소(동/리)">
+                </div>
+                <div class="col">
+                    <input id="searchCompanyName" class="form-control" name="searchCompanyName" value=""
+                        placeholder="업체명">
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-success">서치</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#addItem">등록하기</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="row m-2">
+        <div class="col-sm-9 col-xs-12">
+            <div class="table-responsive" style="font-size:12px;">
+                <table class="table" style="table-layout: fixed">
+                    <thead>
+                        <tr>
+                            <th scope="row" width="100">#</th>
+                            <th scope="col" width="200">업체명</th>
+                            <th scope="col" width="300">업체주소</th>
+                            <th scope="col" width="300">상세주소</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list-data">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-3 col-xs-12">
+            <div>
+                <h4>오늘 등록</h4>
+                <ul class="list-group" id="list-today-added-data">
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="addItemLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemLabel">업체등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addItemSave">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체명</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-companyName" id="addItem-companyName">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체주소</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-companyAddress"
+                                id="addItem-companyAddress">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체상세주소</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-companyDetailAddress"
+                                id="addItem-companyDetailAddress">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">매장연락처</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-companyContact"
+                                id="addItem-companyContact">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">등록링크</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-infoUrl" id="addItem-infoUrl">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">대표핸드폰번호</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-phoneNumber" id="addItem-phoneNumber">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">운영기간</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-serviceTime" id="addItem-serviceTime">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">주력메뉴</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-bestMenu" id="addItem-bestMenu">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">통화한 사람</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-talkPeople" id="addItem-talkPeople">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">담당자 성함</span>
+                            </div>
+                            <input type="text" class="form-control" name="addItem-managerName" id="addItem-managerName">
+                        </div>
+                        <div class="form-group">
+                            <label for="addItem-talkDesc">통화내용</label>
+                            <textarea class="form-control" id="addItem-talkDesc" name="addItem-talkDesc"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="addItem-anyDesc">반론,질문</label>
+                            <textarea class="form-control" id="addItem-anyDesc" name="addItem-anyDesc"
+                                rows="3"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">등록</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<footer th:replace="fragment/footer::footer"></footer>
+<script th:src="@{/js/dashboard.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+
+</html>

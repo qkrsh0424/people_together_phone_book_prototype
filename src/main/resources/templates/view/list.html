@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragment/header::header"></head>
+
+<body>
+    <div class="" id="list-container">
+        <h1 class="text-center">List</h1>
+        <div class="text-center">
+            <a href="/">홈으로</a>
+        </div>
+        <div>
+            <input type="date" name="startDate" id="startDate">
+            <button type="button" onclick="lookupDateHandler()">조회</button>
+            <button type="button" onclick="lookupAllHandler()">모두조회</button>
+        </div>
+        <div class="table-responsive" style="font-size:12px; max-height: 600px;">
+            <table class="table" style="table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th scope="row" width="100">#</th>
+                        <th scope="col" width="200">기능</th>
+                        <th scope="col" width="200">업체명</th>
+                        <th scope="col" width="300">업체주소</th>
+                        <th scope="col" width="300">상세주소</th>
+                        <th scope="col" width="200">매장연락처</th>
+                        <th scope="col" width="200">정보링크(URL)</th>
+                        <th scope="col" width="200">대표핸드폰번호</th>
+                        <th scope="col" width="200">운영기간</th>
+                        <th scope="col" width="200">주력메뉴</th>
+                        <th scope="col" width="200">통화시간</th>
+                        <th scope="col" width="200">통화한사람</th>
+                        <th scope="col" width="200">담당자 성함</th>
+                        <th scope="col" width="300">통화내용</th>
+                        <th scope="col" width="300">반론,질문</th>
+                    </tr>
+                </thead>
+                <tbody id="list-data">
+                </tbody>
+            </table>
+        </div>
+        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" id="list-data-number" aria-label="First group">
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="fixItem" tabindex="-1" aria-labelledby="fixItemLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="fixItemLabel">업체등록</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="fixItemSave">
+                        <input hidden id="fixItem-id" name="fixItem-id"/>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체명</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-companyName" id="fixItem-companyName">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체주소</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-companyAddress"
+                                id="fixItem-companyAddress">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">업체상세주소</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-companyDetailAddress"
+                                id="fixItem-companyDetailAddress">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">매장연락처</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-companyContact"
+                                id="fixItem-companyContact">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">등록링크</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-infoUrl" id="fixItem-infoUrl">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">대표핸드폰번호</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-phoneNumber" id="fixItem-phoneNumber">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">운영기간</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-serviceTime" id="fixItem-serviceTime">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">주력메뉴</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-bestMenu" id="fixItem-bestMenu">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">통화한 사람</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-talkPeople" id="fixItem-talkPeople">
+                        </div>
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">담당자 성함</span>
+                            </div>
+                            <input type="text" class="form-control" name="fixItem-managerName" id="fixItem-managerName">
+                        </div>
+                        <div class="form-group">
+                            <label for="fixItem-talkDesc">통화내용</label>
+                            <textarea class="form-control" id="fixItem-talkDesc" name="fixItem-talkDesc"
+                                rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fixItem-anyDesc">반론,질문</label>
+                            <textarea class="form-control" id="fixItem-anyDesc" name="fixItem-anyDesc"
+                                rows="3"></textarea>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="submit" class="btn btn-primary">수정</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer th:replace="fragment/footer::footer"></footer>
+    <script th:src="@{/js/list.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+</body>
+
+</html>
