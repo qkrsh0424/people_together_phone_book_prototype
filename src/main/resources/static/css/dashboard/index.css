@@ -1,0 +1,51 @@
+.searchWrapper{
+    padding:16px 32px;
+    display: flex;
+    justify-content: space-between;
+}
+.searchInputBox{
+    display: flex;
+    
+}
+
+.searchInput{
+    border: 2px solid #331ad9;
+    width:auto;
+}
+
+.searchBtn{
+    background-color: #331ad9;
+    color:white;
+    border-radius: 2px;
+}
+
+.sendBtn{
+    background-color: #18148c;
+    color:white;
+    border-radius: 2px;
+}
+
+.textLogo{
+    font-weight: 600;
+    font-size: 24px;
+    padding: 16px 32px;
+    color:#131073;
+}
+
+
+
+
+
+.list-data tr:nth-child(2n){
+    background-color: #f5f6fa;
+}
+
+
+.input-group-text{
+    text-align: center;
+    width:100px;
+    border-radius: 16px;
+    background-color: #18148c;
+    color:white;
+}
+

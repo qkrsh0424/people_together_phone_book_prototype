@@ -9,6 +9,7 @@ function init() {
 function setInitializeList() {
     window.scrollTo(0, 0);
     if (getUrlParams().date) {
+        console.log(getUrlParams().date)
         searchListByDate(getUrlParams().date);
     } else {
         searchListByCommon();
@@ -18,8 +19,9 @@ function setInitializeList() {
 
 function searchListByDate(currentSelectedDate){
     $("#startDate").val(currentSelectedDate);
-
+    // $("#startDate").value="asd";
     let startDate = new Date(currentSelectedDate);
+    console.log(startDate.toUTCString())
     let html = ``;
     let data = {
         "date": startDate.toUTCString()
@@ -53,9 +55,11 @@ function searchListByCommon(){
         dataType: "json",
         data: data,
         success: function (returnData) {
+            console.log(returnData);
             for (let i = 0; i < returnData.items.length; i++) {
                 html += makeHtml(returnData.items[i], num * ITEM_LIST_SIZE + i);
             }
+            console.log(returnData)
             setItemsSize(returnData.size);
             $("#list-data").html(html);
         },
@@ -69,7 +73,9 @@ function searchListByCommon(){
 function setItemsSize(size) {
     let html = ``;
     let number = Math.ceil(size / ITEM_LIST_SIZE);
-
+    console.log(size)
+    console.log(ITEM_LIST_SIZE)
+    console.log(number)
     for (let i = 0; i < number; i++) {
         html += `
             <a type="button" class="btn btn-secondary" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a>
@@ -84,32 +90,26 @@ function makeHtml(data, i) {
     let html = `
         <input hidden id="itemData-${data.id}" value=${JSON.stringify(data)}></input>
         <tr>
-            <th scope="row">${i + 1}</th>
-            <td><button class="btn btn-primary" onclick="viewItemHandler(${data.id})">보기</button><button class="btn btn-primary" onclick="fixItemHandler(${data.id})">수정</button><button class="btn btn-danger" onclick="deleteItemHandler(${data.id})">삭제</button></td>
+            <th " scope="row">${i + 1}</th>
+            <td><button class="btn sendBtn" onclick="viewItemHandler(${data.id})">상세보기</button>
             <td>${data.companyName}</td>
             <td>${data.companyAddress}</td>
             <td>${data.companyDetailAddress}</td>
-            <td>${data.companyContact}</td>
-            <td>${data.infoUrl}</td>
             <td>${data.phoneNumber}</td>
-            <td>${data.serviceTime}</td>
-            <td>${data.bestMenu}</td>
-            <td>${date}</td>
+            <td>${data.companyContact}</td>
             <td>${data.talkPeople}</td>
             <td>${data.managerName}</td>
-            <td>${data.talkDesc}</td>
-            <td>${data.anyDesc}</td>
         </tr>
         <tr>
-            <td colspan="15">
-                <div class="collapse" id="collapse-${data.id}">
-                    <div class="card card-body">
+            <td colspan="10"  >
+                <div class="collapse" id="collapse-${data.id}" >
+                    <div class="card card-body" id="copy-${data.id}">
                     <p>업체명 : ${data.companyName}</p>
                     <p>업체주소 : ${data.companyAddress}</p>
                     <p>상세주소 : ${data.companyDetailAddress}</p>
+                    <p>대표핸드폰번호 : ${data.phoneNumber}</p>
                     <p>매장연락처 : ${data.companyContact}</p>
                     <p>정보링크(URL) : ${data.infoUrl}</p>
-                    <p>대표핸드폰번호 : ${data.phoneNumber}</p>
                     <p>운영기간 : ${data.serviceTime}</p>
                     <p>주력메뉴 : ${data.bestMenu}</p>
                     <p>통화시간 : ${date}</p>
@@ -118,9 +118,14 @@ function makeHtml(data, i) {
                     <p>통화내용 : ${data.talkDesc}</p>
                     <p>반론,질문 : ${data.anyDesc}</p>
                     </div>
+                    <div class="modal-footer">
+                    <button class="btn sendBtn" onclick="saveItemHandler(${data.id})">복사</button>
+                    <button class="btn searchBtn" onclick="fixItemHandler(${data.id})">수정</button>
+                    <button class="btn btn-danger" onclick="deleteItemHandler(${data.id})">삭제</button>
+                    </div>
                 </div>
             </td>
-        <tr/>
+        </tr>
         
     `;
     return html;
@@ -150,6 +155,18 @@ function lookupAllHandler() {
     window.location.href=`/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}`;
 }
 
+function saveItemHandler(itemId){
+    let data = JSON.parse($(`#itemData-${itemId}`).val());
+    var getCopyText = document.getElementById(`copy-${data.id}`);
+    var textEl = getCopyText.innerText;
+    copyText(textEl);
+}
+
+function copyText(text){
+    navigator.clipboard.writeText(text);
+    // alert("복사 되었습니다.");
+}
+
 function fixItemHandler(itemId) {
 
     let data = JSON.parse($(`#itemData-${itemId}`).val());
@@ -171,6 +188,7 @@ function fixItemHandler(itemId) {
 
 function viewItemHandler(itemId) {
     $(`#collapse-${itemId}`).collapse("toggle");
+    // $(`show-${itemId}`).show();
 }
 
 $("#fixItemSave").submit(function (event) {
@@ -224,12 +242,13 @@ function deleteItemHandler(itemId) {
             if (returnData.message === 'success') {
                 alert("삭제되었습니다.");
                 // window.location.reload();
-                setHtml2();
+                setInitializeList();
             }
         },
         error: function (error) {
             console.log(error);
             alert("server connect failed");
+            
         }
     });
 }
