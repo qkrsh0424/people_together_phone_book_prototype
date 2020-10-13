@@ -140,9 +140,13 @@ function date_to_str(format){
 }
 
 function makeTodayAddedHtml(data,i){
-    
+    // console.log(data)
     let html = `
-        <li class="list-group-item">${i+1} ${data.companyName}</li>
+    <tr data-toggle="collapse" aria-expanded="false">
+        <th scope="row" >${i+1}</th>
+        <td>${data.companyName}</td>
+        <td>${data.companyAddress}</td>
+        </tr>
     `;
     return html;
 }

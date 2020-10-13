@@ -86,7 +86,9 @@ public class AddItemService {
 
     public List<ItemEntity> getItemsByNumber(int number){
         int startNum = number * ITEM_LIST_SIZE;
-        int endNum = startNum + ITEM_LIST_SIZE;
+        int endNum = ITEM_LIST_SIZE;
+        System.out.println(startNum);
+        System.out.println(endNum);
         return itemRepository.findItemByListNumber(startNum, endNum, 0);
     }
 

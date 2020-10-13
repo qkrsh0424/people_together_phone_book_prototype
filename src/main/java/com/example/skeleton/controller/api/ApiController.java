@@ -41,6 +41,7 @@ public class ApiController {
     @GetMapping(value = "/get/list/bynum")
     public ItemListDTO getAllItemsByNum(@RequestParam("number") int number){
         List<ItemEntity> itemList = addItemService.getItemsByNumber(number);
+        // System.out.println(itemList);
         int itemSize = addItemService.getItemsAll().size();
         ItemListDTO items = new ItemListDTO();
         items.setItems(itemList);

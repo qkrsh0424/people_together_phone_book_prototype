@@ -1,0 +1,45 @@
+
+thead th{
+    background-color: #18148c;
+    color:white;
+}
+
+table{
+    
+}
+
+.table-responsive{
+    border-radius: 8px;
+    overflow-y: scroll;
+}
+
+/* modal */
+.modalLabel{
+    margin: 2px 0px 4px 2px;
+}
+
+.modalInput{
+    width: 100%;
+    outline-color: #131073;
+    padding: 2px 4px;
+}
+
+.modal-header{
+    background-color:  #131073;
+    color:white;
+}
+
+.modalDelBtn{
+color:white;
+
+}
+
+.modal-content{
+    border-radius: 8px;
+}
+
+.modal-body{
+    padding:12px 24px;
+    font-weight: 600;
+}
+
