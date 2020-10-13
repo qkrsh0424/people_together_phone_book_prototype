@@ -1,3 +1,4 @@
 <footer th:fragment="footer">
     <script th:src="@{/webjars/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugin/handler.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
 </footer>

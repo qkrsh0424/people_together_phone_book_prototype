@@ -88,9 +88,9 @@ function makeHtml(data, i) {
     let pureDate = new Date(data.talkTime);
     let date = date_to_str(pureDate);
     let html = `
-        <input hidden id="itemData-${data.id}" value=${JSON.stringify(data)}></input>
+        <input hidden id="itemData-${data.id}" value=${jsonToBase64(data)}></input>
         <tr>
-            <th " scope="row">${i + 1}</th>
+            <th scope="row">${i + 1}</th>
             <td><button class="btn sendBtn" onclick="viewItemHandler(${data.id})">상세보기</button>
             <td>${data.companyName}</td>
             <td>${data.companyAddress}</td>
@@ -168,8 +168,8 @@ function copyText(text){
 }
 
 function fixItemHandler(itemId) {
-
-    let data = JSON.parse($(`#itemData-${itemId}`).val());
+    
+    let data = base64ToJson($(`#itemData-${itemId}`).val());
     $("#fixItem-id").val(data.id)
     $("#fixItem-companyName").val(data.companyName)
     $("#fixItem-companyAddress").val(data.companyAddress)
