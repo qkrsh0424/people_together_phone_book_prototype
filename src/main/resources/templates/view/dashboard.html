@@ -5,79 +5,76 @@
 
 <body>
     <!-- <div class="container"> -->
-        <div class="pt-2 pb-2">
+    <div class="pt-2 pb-2">
         <div class="row  m-2">
-        <div class="col-sm-8 col-xs-12">
-        <form id="searchSubmit">
-            <div class="row searchWrapper">
-                <div class="searchInputBox">
-                <div class="mr-3">
-                    <input id="searchAddress" class="form-control searchInput" name="searchAddress" value="" placeholder="주소(동/리)">
-                </div>
-                <div>
-                    <input id="searchCompanyName" class="form-control searchInput" name="searchCompanyName" value=""
-                        placeholder="업체명">
-                </div>
+            <div class="col-sm-8 col-xs-12">
+                <form id="searchSubmit">
+                    <div class="row searchWrapper">
+                        <div class="searchInputBox">
+                            <div class="mr-3">
+                                <input id="searchAddress" class="form-control searchInput" name="searchAddress" value=""
+                                    placeholder="주소(동/리)">
+                            </div>
+                            <div>
+                                <input id="searchCompanyName" class="form-control searchInput" name="searchCompanyName"
+                                    value="" placeholder="업체명">
+                            </div>
+                        </div>
+                        <div class="searchBtnBox">
+                            <div>
+                                <button type="submit" class="btn searchBtn mr-1">검색하기</button>
+                                <button type="button" class="btn sendBtn" data-toggle="modal"
+                                    data-target="#addItem">등록하기</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
             </div>
-            <div class="searchBtnBox">
-                <div>
-                    <button type="submit" class="btn searchBtn mr-1">검색하기</button>
-                    <button type="button" class="btn sendBtn" data-toggle="modal"
-                        data-target="#addItem">등록하기</button>
-                </div>
-            </div>
-            </div>
-
-        </form>
-    </div>
-    <div class="col-sm-4 col-xs-12 text-center">
-        <p class="textLogo">People Together Customer Data</p>
-    </div> 
-    </div>
-    
-
-    <div class="row m-2">
-        <div class="col-sm-8 col-xs-12">
-
-            
-
-
-            <div class="table-responsive list-table-box">
-                <table class="table list-table" style="table-layout: fixed">
-                    <thead>
-                        <tr>
-                            <th scope="row" width="100">#</th>
-                            <th scope="col" width="200">업체명</th>
-                            <th scope="col" width="300">업체주소</th>
-                            <th scope="col" width="300">상세주소</th>
-                        </tr>
-                    </thead>
-                    <tbody class="list-data" id="list-data">
-                    </tbody>
-                </table>
+            <div class="col-sm-4 col-xs-12 text-center">
+                <p class="textLogo">People Together Customer Data</p>
             </div>
         </div>
-        <div class="col-sm-4 col-xs-12">
-            <div>
-                
+
+
+        <div class="row m-2">
+            <div class="col-sm-8 col-xs-12">
                 <div class="table-responsive list-table-box">
-                <table class="table list-table" style="table-layout: fixed">
-                    <thead>
-                        <tr>
-                            <th scope="row" width="50">#</th>
-                            <th scope="col" width="100">업체명</th>
-                            <th scope="col" width="200">업체주소</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody class="list-data" id="list-today-added-data">
-                    </tbody>
-                </table>
+                    <table class="table list-table" style="table-layout: fixed">
+                        <thead>
+                            <tr>
+                                <th scope="row" width="100">#</th>
+                                <th scope="col" width="200">업체명</th>
+                                <th scope="col" width="300">업체주소</th>
+                                <th scope="col" width="300">상세주소</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list-data" id="list-data">
+                        </tbody>
+                    </table>
+                </div>
             </div>
+            <div class="col-sm-4 col-xs-12">
+                <div>
+
+                    <div class="table-responsive list-table-box">
+                        <table class="table list-table" style="table-layout: fixed">
+                            <thead>
+                                <tr>
+                                    <th scope="row" width="50">#</th>
+                                    <th scope="col" width="100">업체명</th>
+                                    <th scope="col" width="200">업체주소</th>
+
+                                </tr>
+                            </thead>
+                            <tbody class="list-data" id="list-today-added-data">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- </div> -->
+        <!-- </div> -->
     </div>
 
 
@@ -93,88 +90,44 @@
                 </div>
                 <div class="modal-body">
                     <form id="addItemSave">
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체명</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-companyName" id="addItem-companyName">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체주소</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-companyAddress"
-                                id="addItem-companyAddress">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체상세주소</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-companyDetailAddress"
-                                id="addItem-companyDetailAddress">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">매장연락처</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-companyContact"
-                                id="addItem-companyContact">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">등록링크</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-infoUrl" id="addItem-infoUrl">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">대표핸드폰번호</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-phoneNumber" id="addItem-phoneNumber">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">운영기간</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-serviceTime" id="addItem-serviceTime">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">주력메뉴</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-bestMenu" id="addItem-bestMenu">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">통화한 사람</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-talkPeople" id="addItem-talkPeople">
-                        <!-- </div> -->
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">담당자 성함</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="addItem-managerName" id="addItem-managerName">
-                        <!-- </div> -->
+                        <div class="modalLabel">업체명</div>
+                        <input type="text" class="modalInput" name="addItem-companyName" id="addItem-companyName">
+                        <div class="modalLabel">업체주소</div>
+                        <input type="text" class="modalInput" name="addItem-companyAddress" id="addItem-companyAddress">
+                        <div class="modalLabel">업체상세주소</div>
+                        <input type="text" class="modalInput" name="addItem-companyDetailAddress"
+                            id="addItem-companyDetailAddress">
+                        <div class="modalLabel">매장연락처</div>
+                        <input type="text" class="modalInput" name="addItem-companyContact" id="addItem-companyContact">
+                        <div class="modalLabel">등록링크</div>
+                        <input type="text" class="modalInput" name="addItem-infoUrl" id="addItem-infoUrl">
+                        <div class="modalLabel">대표핸드폰번호</div>
+                        <input type="text" class="modalInput" name="addItem-phoneNumber" id="addItem-phoneNumber">
+                        <div class="modalLabel">운영기간</div>
+                        <input type="text" class="modalInput" name="addItem-serviceTime" id="addItem-serviceTime">
+                        <div class="modalLabel">주력메뉴</div>
+                        <input type="text" class="modalInput" name="addItem-bestMenu" id="addItem-bestMenu">
+                        <div class="modalLabel">통화한 사람</div>
+                        <input type="text" class="modalInput" name="addItem-talkPeople" id="addItem-talkPeople">
+                        <div class="modalLabel">담당자 성함</div>
+                        <input type="text" class="modalInput" name="addItem-managerName" id="addItem-managerName">
                         <div class="form-group">
                             <label class="modalLabel" for="addItem-talkDesc">통화내용</label>
                             <textarea class="modalInput" id="addItem-talkDesc" name="addItem-talkDesc"
                                 rows="3"></textarea>
-                        <!-- </div> -->
-                        <div class="form-group">
-                            <label class="modalLabel" for="addItem-anyDesc">반론,질문</label>
-                            <textarea class="modalInput" id="addItem-anyDesc" name="addItem-anyDesc"
-                                rows="3"></textarea>
-                        <!-- </div> -->
+                            <div class="form-group">
+                                <label class="modalLabel" for="addItem-anyDesc">반론,질문</label>
+                                <textarea class="modalInput" id="addItem-anyDesc" name="addItem-anyDesc"
+                                    rows="3"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                <button type="submit" class="btn sendBtn">등록하기</button>
+                            </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="submit" class="btn sendBtn">등록하기</button>
-                </div>
-                </form>
             </div>
         </div>
-    </div>
 </body>
 <footer th:replace="fragment/footer::footer"></footer>
 <script th:src="@{/js/dashboard.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>

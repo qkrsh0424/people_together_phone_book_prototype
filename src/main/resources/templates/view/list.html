@@ -12,17 +12,23 @@
         <p class="textLogo" style="font-size: 36px;">People Together Admin Page</p>
             <!-- <a href="/">홈으로</a> -->
         </div>
-        <div class="date-box mb-2">
+        <div class="date-box">
             <input class="form-control searchInput mx-2" type="date" name="startDate" id="startDate">
-            <button class="btn searchBtn mr-2" type="button" onclick="lookupDateHandler()">조회</button>
+            <button class="btn viewBtn mr-2" type="button" onclick="lookupDateHandler()">조회</button>
             <button class="btn sendBtn " type="button" onclick="lookupAllHandler()">모두조회</button>
         </div>
+        
+        <!-- <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <div class="btn-group mr-2" role="group" id="list-data-number" aria-label="First group">
+            </div> -->
+        </div>
+        <div class="row  m-2">
+            <div class="col-sm-8 col-xs-12">
         <div class="table-responsive list-table-box">
             <table class="table list-table" >
                 <thead >
                     <tr>
                         <th scope="row" >#</th>
-                        <th scope="col" >기능</th>
                         <th scope="col" >업체명</th>
                         <th scope="col" >업체주소</th>
                         <th scope="col" >상세주소</th>
@@ -30,17 +36,33 @@
                         <th scope="col" >매장연락처</th>
                         <th scope="col" >통화한사람</th>
                         <th scope="col" >담당자성함</th>
+                        <th scope="col" >기능</th>
                        
                     </tr>
                 </thead>
-                <tbody class="admin-list-data" id="list-data">
+                <tbody class="admin-list-data admin-list-data" id="list-data">
                 </tbody>
             </table>
         </div>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group mr-2" role="group" id="list-data-number" aria-label="First group">
+    </div>
+            <div class="col-sm-4 col-xs-12">
+                
+                <div class="list-table-box" id="list-table-box">
+                    <div class="result-logo-box">
+                        <div class="result-logo">
+                    <h1>PEOPLE TOGETHER</h1>
+                </div>
+                </div>
+                </div>
+
+                
             </div>
-        </div>
+    </div>
+    <div class="pagination-box">
+    <ul class="pagination page-btn-group" id="list-data-number">
+    </ul>
+</div>
+        
         <a class="list_goback" href="/"><i class="fas fa-home"></i></a>
     </div>
 
@@ -146,3 +168,5 @@
 </body>
 
 </html>
+
+
