@@ -12,12 +12,11 @@
                     <div class="row searchWrapper">
                         <div class="searchInputBox">
                             <div class="mr-3">
-                                <input id="searchAddress" class="form-control searchInput" name="searchAddress" value=""
-                                    placeholder="주소(동/리)">
+                                <input id="searchCompanyName" class="form-control searchInput" name="searchCompanyName" value="" placeholder="업체명">
                             </div>
                             <div>
-                                <input id="searchCompanyName" class="form-control searchInput" name="searchCompanyName"
-                                    value="" placeholder="업체명">
+                                <input id="searchAddress" class="form-control searchInput" name="searchAddress" value=""
+                                    placeholder="주소(동/리)">
                             </div>
                         </div>
                         <div class="searchBtnBox">
@@ -40,19 +39,6 @@
         <div class="row m-2">
             <div class="col-sm-8 col-xs-12">
                 <div class="table-responsive list-table-box">
-<<<<<<< HEAD
-                <table class="table list-table" style="table-layout: fixed">
-                    <thead>
-                        <tr>
-                            <th scope="row" width="50">#</th>
-                            <th scope="col" width="100">업체명</th>
-                            <th scope="col" width="200">업체주소</th>
-                        </tr>
-                    </thead>
-                    <tbody class="list-data" id="list-today-added-data">
-                    </tbody>
-                </table>
-=======
                     <table class="table list-table" style="table-layout: fixed">
                         <thead>
                             <tr>
@@ -66,7 +52,6 @@
                         </tbody>
                     </table>
                 </div>
->>>>>>> cff6206e63712e24572eed50333c810af58a3e76
             </div>
             <div class="col-sm-4 col-xs-12">
                 <div>
@@ -78,7 +63,6 @@
                                     <th scope="row" width="50">#</th>
                                     <th scope="col" width="100">업체명</th>
                                     <th scope="col" width="200">업체주소</th>
-
                                 </tr>
                             </thead>
                             <tbody class="list-data" id="list-today-added-data">
@@ -104,6 +88,8 @@
                 </div>
                 <div class="modal-body">
                     <form id="addItemSave">
+                        <div class="modalLabel">등록인</div>
+                        <input type="text" class="modalInput" name="addItem-regEmp" id="addItem-regEmp">
                         <div class="modalLabel">업체명</div>
                         <input type="text" class="modalInput" name="addItem-companyName" id="addItem-companyName">
                         <div class="modalLabel">업체주소</div>

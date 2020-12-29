@@ -19,12 +19,16 @@ public class ItemEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(name = "reg_emp")
+    private String regEmp;
     @Column(name = "company_name")
     private String companyName;
     @Column(name = "company_address")
     private String companyAddress;
     @Column(name = "company_detail_address")
     private String companyDetailAddress;
+    @Column(name = "company_full_address")
+    private String companyFullAddress;
     @Column(name = "company_contact")
     private String companyContact;
     @Column(name = "info_url")

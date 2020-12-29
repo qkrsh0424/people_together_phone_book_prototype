@@ -19,7 +19,7 @@ public class AddItemService {
     @Autowired
     ItemRepository itemRepository;
 
-    private int ITEM_LIST_SIZE = 10;
+    private int ITEM_LIST_SIZE = 5;
 
     public void addItem(AddItemDTO addItemDto){
         ItemEntity item = setAddItemEntity(addItemDto);
@@ -31,9 +31,11 @@ public class AddItemService {
         Calendar currentCalendar = Calendar.getInstance();
         Date currentDate = currentCalendar.getTime();
         item.ifPresent(r->{
+            r.setRegEmp(updateItemDto.getRegEmp());
             r.setCompanyName(updateItemDto.getCompanyName());
             r.setCompanyAddress(updateItemDto.getCompanyAddress());
             r.setCompanyDetailAddress(updateItemDto.getCompanyDetailAddress());
+            r.setCompanyFullAddress(updateItemDto.getCompanyAddress() + " " + updateItemDto.getCompanyDetailAddress());
             r.setCompanyContact(updateItemDto.getCompanyContact());
             r.setInfoUrl(updateItemDto.getInfoUrl());
             r.setPhoneNumber(updateItemDto.getPhoneNumber());
@@ -62,9 +64,11 @@ public class AddItemService {
         Calendar currentCalendar = Calendar.getInstance();
         Date currentDate = currentCalendar.getTime();
         
+        addItemEntity.setRegEmp(addItemDto.getRegEmp());
         addItemEntity.setCompanyName(addItemDto.getCompanyName());
         addItemEntity.setCompanyAddress(addItemDto.getCompanyAddress());
         addItemEntity.setCompanyDetailAddress(addItemDto.getCompanyDetailAddress());
+        addItemEntity.setCompanyFullAddress(addItemDto.getCompanyAddress() + " " + addItemDto.getCompanyDetailAddress());
         addItemEntity.setCompanyContact(addItemDto.getCompanyContact());
         addItemEntity.setInfoUrl(addItemDto.getInfoUrl());
         addItemEntity.setPhoneNumber(addItemDto.getPhoneNumber());

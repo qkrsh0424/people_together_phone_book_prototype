@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AddItemDTO {
+    private String regEmp;
     private String companyName;
     private String companyAddress;
     private String companyDetailAddress;

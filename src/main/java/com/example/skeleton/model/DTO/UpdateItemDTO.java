@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class UpdateItemDTO {
     private Long id;
+    private String regEmp;
     private String companyName;
     private String companyAddress;
     private String companyDetailAddress;

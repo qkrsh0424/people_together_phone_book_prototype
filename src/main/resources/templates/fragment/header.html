@@ -1,9 +1,12 @@
 <head th:fragment="header">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <title>피플투게더 관리 사이트</title>
     <!-- Bootstrap core CSS -->
     <link th:href="@{/webjars/bootstrap/4.5.2/css/bootstrap.min.css}" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css?version=}+${@environment.getProperty('app.environment.static.version')}">
     <script th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <!-- FontAwesome -->
+    <!-- <script src="https://kit.fontawesome.com/737c90f2f1.js" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.1/css/all.min.css}">
 </head>

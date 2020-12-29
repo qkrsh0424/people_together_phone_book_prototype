@@ -7,6 +7,7 @@ function init(){
 $("#addItemSave").submit(function(event){
     event.preventDefault();
     let confirmData = `
+        등록인 : ${$("#addItem-regEmp").val()}
         업체명 : ${$("#addItem-companyName").val()}
         업체 주소 : ${$("#addItem-companyAddress").val()}
         업체 상세 주소 : ${$("#addItem-companyDetailAddress").val()}
@@ -23,6 +24,7 @@ $("#addItemSave").submit(function(event){
     if(confirm(`정말로 등록 하시겠습니까? ${confirmData}`) === true){
         $('#addItem').modal('hide')
         let data = JSON.stringify({
+            "regEmp":$('#addItem-regEmp').val(),
             "companyName":$("#addItem-companyName").val(),
             "companyAddress":$("#addItem-companyAddress").val(),
             "companyDetailAddress":$("#addItem-companyDetailAddress").val(),
@@ -44,7 +46,7 @@ $("#addItemSave").submit(function(event){
             dataType:"json",
             data:data,
             success:function(returnData){
-                console.log(returnData);
+                // console.log(returnData);
                 initializeInputData();
                 lookupAddedTodayHandler();
             },
@@ -59,6 +61,7 @@ $("#addItemSave").submit(function(event){
 })
 
 function initializeInputData(){
+    $("#addItem-regEmp").val("");
     $("#addItem-companyName").val("");
     $("#addItem-companyAddress").val("");
     $("#addItem-companyDetailAddress").val("");
@@ -81,7 +84,7 @@ function searchItemByAddressAndName(){
     let authId = $("#searchAddress").val().split(' ');
     let authPw = $("#searchCompanyName").val().split(' ');
     if(authId[0]==='admin' & authPw[0]==='admin'){
-        return window.location.href=`/list?id=${authId[1]}&pw=${authPw[1]}&page=0`;
+        return window.location.href=`/list?id=${btoa(authId[1])}&pw=${btoa(authPw[1])}&page=0`;
     }
 
     let html =``;
@@ -164,7 +167,7 @@ function lookupAddedTodayHandler(){
         dataType:"json",
         // data:data,
         success:function(returnData){
-            console.log(returnData);
+            // console.log(returnData);
             for(let i = 0 ; i < returnData.length; i++){
                 html += makeTodayAddedHtml(returnData[i],i);
             }

@@ -1,126 +1,62 @@
-const ITEM_LIST_SIZE = 10;
-const PAGE_COUNT = 5;
-// const AUTH_LIST_PATH = "@{/list?id=}"
-init();
-
-function init() {
-    setInitializeList();
-}
-
-function setInitializeList() {
-    window.scrollTo(0, 0);
-    if (getUrlParams().date) {
-        console.log(getUrlParams().date)
-        searchListByDate(getUrlParams().date);
-    } else {
-        searchListByCommon();
-    }
-
-}
-
-function searchListByDate(currentSelectedDate) {
-    $("#startDate").val(currentSelectedDate);
-    // $("#startDate").value="asd";
-    let startDate = new Date(currentSelectedDate);
-    console.log(startDate.toUTCString())
+function loadTableHtml(){
     let html = ``;
-    let data = {
-        "date": startDate.toUTCString()
-    };
-    $.ajax({
-        url: "/api/get/list/bydate",
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        data: data,
-        success: function (returnData) {
-            for (let i = 0; i < returnData.items.length; i++) {
-                html += makeHtml(returnData.items[i], i);
-            }
-            $("#list-data").html(html);
-        }
-    })
-}
-
-function searchListByCommon() {
-    let num = Number(getUrlParams().page ? getUrlParams().page : "0");
-    let html = ``;
-    let data = {
-        "number": num
-    }
-
-    $.ajax({
-        url: "/api/get/list/bynum",
-        type: "GET",
-        contentType: "application/json",
-        dataType: "json",
-        data: data,
-        success: function (returnData) {
-            // console.log(returnData);
-            for (let i = 0; i < returnData.items.length; i++) {
-                html += makeHtml(returnData.items[i], num * ITEM_LIST_SIZE + i);
-            }
-            // console.log(returnData)
-            setItemsSize(returnData.size);
-            $("#list-data").html(html);
-        },
-        error: function (error) {
-            console.log(error);
-            alert("server connect error");
-        }
-    })
+    ITEMS.forEach((r,index)=>{
+        html += makeHtml(r, index);
+    });
+    $("#list-data").html(html);
 }
 
 function setItemsSize(size) {
+    console.log(size);
     //url에서 현재 페이지를 받아온다
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const currentPage = Number(urlParams.get('page'))
+    const currentPage = Number(urlParams.get('page'));
     //맨마지막페이지랑 보여줄 페이지 버튼 갯수 계산
     let html = ``;
-    let totalPage = Math.ceil(size / ITEM_LIST_SIZE)-Number(1);
+    let totalPage = Math.ceil(size / ITEM_LIST_SIZE) - Number(1);
     //보여줄 페이지 버튼의 맨마지막 번호
-    let lastPage = currentPage+2;
-    if(lastPage > totalPage)
-    lastPage = totalPage;
+    let lastPage = currentPage + 2;
+    if (lastPage > totalPage){
+        lastPage = totalPage;
+    }
     //보여줄 페이지 버튼의 맨첫번째 번호
     let firstPage = lastPage - 4;
-    if(firstPage < 0){
-    firstPage = 0;
-    lastPage = 4;
+    if (firstPage < 0) {
+        firstPage = 0;
     }
 
-    console.log("size:",size)
-    console.log("totalPage:",totalPage)
-    console.log("currentPage:",currentPage)
-    // console.log("pageGroup:",pageGroup)
-    console.log("firstPage:",firstPage)
-    console.log("lastPage:",lastPage)
+    // console.log("size:", size)
+    // console.log("totalPage:", totalPage)
+    // console.log("currentPage:", currentPage)
+    // console.log("firstPage:", firstPage)
+    // console.log("lastPage:", lastPage)
 
-        
-            html += `<li class="page-item page-first-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${0}"><</a><li> `
-        for(var i=firstPage; i <= lastPage; i++){
-            html += `<li class="page-number-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i+1}</a><li>`;
+
+    html += `<li class="page-item page-first-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${0}"><i class="fas fa-angle-double-left"></i></a><li> `
+    for (var i = firstPage; i <= lastPage; i++) {
+        if(currentPage==i){
+            html += `<li class="page-number-item"><a type="button" class="btn pageBtn text-danger" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a><li>`;    
+        }else{
+            html += `<li class="page-number-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a><li>`;
         }
-            html += `<li class="page-item page-last-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${totalPage}">></a><li> `
-
-    // for (let i = firstPage; i <= lastPage; i++) {
-    //     html += `
-        
-    //         <a type="button" class="btn btn-secondary" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a>
             
-    //     `;
-    // }
+    }
+    html += `<li class="page-item page-last-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${totalPage}"><i class="fas fa-angle-double-right"></i></a><li> `
+
     $("#list-data-number").html(html);
+    pagenationNum(currentPage+1, totalPage+1);
 }
 
 function makeHtml(data, i) {
     let pureDate = new Date(data.talkTime);
     let date = date_to_str(pureDate);
     let html = `
-    <input hidden id="itemData-${data.id}" value=${jsonToBase64(data)}></input>
-    <tr>
-            <td class="list-data" scope="row">${i + 1}</td>
+        <input hidden id="itemData-${data.id}" value=${jsonToBase64(data)}></input>
+        <tr>
+            <td class="list-data" scope="row">${(((getUrlParams().page?Number(getUrlParams().page):0) * ITEM_LIST_SIZE)+i+1)}</td>
+            <td><button class="btn sendBtn" onclick="showResultBox().set('${jsonToBase64(data)}')">상세보기</button>
+            <td>${data.regEmp}</td>
             <td>${data.companyName}</td>
             <td>${data.companyAddress}</td>
             <td>${data.companyDetailAddress}</td>
@@ -128,7 +64,6 @@ function makeHtml(data, i) {
             <td>${data.companyContact}</td>
             <td>${data.talkPeople}</td>
             <td>${data.managerName}</td>
-            <td><button class="btn sendBtn" onclick="showResultBox('${jsonToBase64(data)}')">상세보기</button>
         </tr>
     `;
     return html;
@@ -136,12 +71,25 @@ function makeHtml(data, i) {
 
 // result-box
 
-function showResultBox(itemId) {
-    let html = ``;
-    html = makeHtml2(itemId);
-    $("#list-table-box").html(html);
-
-
+function showResultBox() {
+    return {
+        set: function(itemId){
+            let html = ``;
+            html = makeHtml2(itemId);
+            $("#list-table-box").html(html);
+        },
+        clear: function(){
+            let html = `
+                <div class="result-logo-box">
+                    <div class="result-logo">
+                        <h1>PEOPLE TOGETHER</h1>
+                    </div>
+                </div>
+            `;
+            $("#list-table-box").html(html);
+        }
+    }
+    
 }
 
 function makeHtml2(itemId) {
@@ -157,19 +105,20 @@ function makeHtml2(itemId) {
             </div>
             <div class="result-box-body" id="result-box-body">
                     <div id="copy-${data.id}">
-                    <p>업체명 : ${data.companyName}</p>
-                    <p>업체주소 : ${data.companyAddress}</p>
-                    <p>상세주소 : ${data.companyDetailAddress}</p>
-                    <p>대표핸드폰번호 : ${data.phoneNumber}</p>
-                    <p>매장연락처 : ${data.companyContact}</p>
-                    <p>정보링크(URL) : ${data.infoUrl}</p>
-                    <p>운영기간 : ${data.serviceTime}</p>
-                    <p>주력메뉴 : ${data.bestMenu}</p>
-                    <p>통화시간 : ${date}</p>
-                    <p>통화한사람 : ${data.talkPeople}</p>
-                    <p>담당자 성함 : ${data.managerName}</p>
-                    <p>통화내용 : ${data.talkDesc}</p>
-                    <p>반론,질문 : ${data.anyDesc}</p>
+                        <p>등록인 : ${data.regEmp}</p>
+                        <p>업체명 : ${data.companyName}</p>
+                        <p>업체주소 : ${data.companyAddress}</p>
+                        <p>상세주소 : ${data.companyDetailAddress}</p>
+                        <p>대표핸드폰번호 : ${data.phoneNumber}</p>
+                        <p>매장연락처 : ${data.companyContact}</p>
+                        <p>정보링크(URL) : ${data.infoUrl}</p>
+                        <p>운영기간 : ${data.serviceTime}</p>
+                        <p>주력메뉴 : ${data.bestMenu}</p>
+                        <p>통화시간 : ${date}</p>
+                        <p>통화한사람 : ${data.talkPeople}</p>
+                        <p>담당자 성함 : ${data.managerName}</p>
+                        <p>통화내용 : ${data.talkDesc}</p>
+                        <p>반론,질문 : ${data.anyDesc}</p>
                     </div>
                     <div class="modal-footer">
                     <button class="btn sendBtn" onclick="saveItemHandler(${data.id})">복사</button>
@@ -178,13 +127,17 @@ function makeHtml2(itemId) {
                 </div>
             </div>
         </div>
-                    
 `
     return html;
 
 }
 
-
+async function deleteItemHandler(itemId){
+    await deleteItemOne(itemId);
+    await listDataConnectInitialize();
+    listLoadHtmlInitialize();
+    showResultBox().clear();
+}
 
 
 function date_to_str(format) {
@@ -219,15 +172,14 @@ function saveItemHandler(itemId) {
 }
 
 function copyText(text) {
-    console.log(text)
     navigator.clipboard.writeText(text);
-    // alert("복사 되었습니다.");
 }
 
 function fixItemHandler(itemId) {
 
     let data = base64ToJson($(`#itemData-${itemId}`).val());
     $("#fixItem-id").val(data.id)
+    $("#fixItem-regEmp").val(data.regEmp)
     $("#fixItem-companyName").val(data.companyName)
     $("#fixItem-companyAddress").val(data.companyAddress)
     $("#fixItem-companyDetailAddress").val(data.companyDetailAddress)
@@ -243,76 +195,19 @@ function fixItemHandler(itemId) {
     $("#fixItem").modal("show");
 }
 
-// function viewItemHandler(itemId) {
-// showResultBox(itemId)
-// $(`#collapse-${itemId}`).collapse("toggle");
-// $(`show-${itemId}`).show();
-// }
-
-$("#fixItemSave").submit(function (event) {
-    event.preventDefault();
-
-    let data = JSON.stringify({
-        "id": $("#fixItem-id").val(),
-        "companyName": $("#fixItem-companyName").val(),
-        "companyAddress": $("#fixItem-companyAddress").val(),
-        "companyDetailAddress": $("#fixItem-companyDetailAddress").val(),
-        "companyContact": $("#fixItem-companyContact").val(),
-        "infoUrl": $("#fixItem-infoUrl").val(),
-        "phoneNumber": $("#fixItem-phoneNumber").val(),
-        "serviceTime": $("#fixItem-serviceTime").val(),
-        "bestMenu": $("#fixItem-bestMenu").val(),
-        "talkPeople": $("#fixItem-talkPeople").val(),
-        "managerName": $("#fixItem-managerName").val(),
-        "talkDesc": $("#fixItem-talkDesc").val(),
-        "anyDesc": $("#fixItem-anyDesc").val()
-    });
-    $.ajax({
-        url: "/api/update/item/one",
-        type: "post",
-        contentType: "application/json",
-        dataType: "json",
-        data: data,
-        success: function (returnData) {
-            if (returnData.message === 'success') {
-                alert("수정되었습니다.");
-                window.location.reload();
-            }
-        },
-        error: function (error) {
-            console.log(error);
-            alert("server connect failed");
-        }
-    });
-})
-
-function deleteItemHandler(itemId) {
-    let data = JSON.stringify({
-        "id": itemId
-    })
-    $.ajax({
-        url: "/api/delete/item/one",
-        type: "post",
-        contentType: "application/json",
-        dataType: "json",
-        data: data,
-        success: function (returnData) {
-            if (returnData.message === 'success') {
-                alert("삭제되었습니다.");
-                // window.location.reload();
-                setInitializeList();
-            }
-        },
-        error: function (error) {
-            console.log(error);
-            alert("server connect failed");
-
-        }
-    });
-}
-
 function getUrlParams() {
     var params = {};
     window.location.search.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (str, key, value) { params[key] = value; });
     return params;
+}
+
+function pagenationNum(currentPage, totalPage){
+    if(totalPage==0){
+        $('#i_list_data_number_of').html('');
+        return ;
+    }
+    let html = `
+        ${currentPage} / ${totalPage}
+    `;
+    $('#i_list_data_number_of').html(html);
 }

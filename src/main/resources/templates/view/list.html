@@ -2,68 +2,64 @@
 <html lang="en">
 
 <head th:replace="fragment/header::header"></head>
-<link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
-  />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
 <body>
     <div class="list-container" id="list-container">
         <div class="text-center">
-        <p class="textLogo" style="font-size: 36px;">People Together Admin Page</p>
-            <!-- <a href="/">홈으로</a> -->
+            <p class="textLogo" style="font-size: 36px;">People Together Admin Page</p>
         </div>
         <div class="date-box">
             <input class="form-control searchInput mx-2" type="date" name="startDate" id="startDate">
             <button class="btn viewBtn mr-2" type="button" onclick="lookupDateHandler()">조회</button>
             <button class="btn sendBtn " type="button" onclick="lookupAllHandler()">모두조회</button>
         </div>
-        
-        <!-- <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group mr-2" role="group" id="list-data-number" aria-label="First group">
-            </div> -->
-        </div>
-        <div class="row  m-2">
-            <div class="col-sm-8 col-xs-12">
-        <div class="table-responsive list-table-box">
-            <table class="table list-table" >
-                <thead >
-                    <tr>
-                        <th scope="row" >#</th>
-                        <th scope="col" >업체명</th>
-                        <th scope="col" >업체주소</th>
-                        <th scope="col" >상세주소</th>
-                        <th scope="col" >대표핸드폰번호</th>
-                        <th scope="col" >매장연락처</th>
-                        <th scope="col" >통화한사람</th>
-                        <th scope="col" >담당자성함</th>
-                        <th scope="col" >기능</th>
-                       
-                    </tr>
-                </thead>
-                <tbody class="admin-list-data admin-list-data" id="list-data">
-                </tbody>
-            </table>
-        </div>
     </div>
-            <div class="col-sm-4 col-xs-12">
-                
-                <div class="list-table-box" id="list-table-box">
-                    <div class="result-logo-box">
-                        <div class="result-logo">
-                    <h1>PEOPLE TOGETHER</h1>
-                </div>
-                </div>
-                </div>
-
-                
+    <div class="row  m-2">
+        <div class="col-sm-8 col-xs-12">
+            <div class="table-responsive list-table-box">
+                <table class="table list-table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="row">#</th>
+                            <th scope="col">기능</th>
+                            <th scope="col">등록인</th>
+                            <th scope="col">업체명</th>
+                            <th scope="col">업체주소</th>
+                            <th scope="col">상세주소</th>
+                            <th scope="col">대표핸드폰번호</th>
+                            <th scope="col">매장연락처</th>
+                            <th scope="col">통화한사람</th>
+                            <th scope="col">담당자성함</th>
+                        </tr>
+                    </thead>
+                    <tbody class="admin-list-data admin-list-data" id="list-data">
+                    </tbody>
+                </table>
             </div>
+        </div>
+        <div class="col-sm-4 col-xs-12">
+
+            <div class="list-table-box" id="list-table-box">
+                <div class="result-logo-box">
+                    <div class="result-logo">
+                        <h1>PEOPLE TOGETHER</h1>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
     <div class="pagination-box">
-    <ul class="pagination page-btn-group" id="list-data-number">
-    </ul>
-</div>
-        
-        <a class="list_goback" href="/"><i class="fas fa-home"></i></a>
+        <div>
+            <ul class="pagination page-btn-group" id="list-data-number">
+            </ul>
+            <span id="i_list_data_number_of"></span>
+        </div>
+    </div>
+
+    <a class="list_goback" href="/"><i class="fas fa-home"></i></a>
     </div>
 
     <!-- Modal -->
@@ -78,70 +74,30 @@
                 </div>
                 <div class="modal-body">
                     <form id="fixItemSave">
-                        <input hidden id="fixItem-id" name="fixItem-id"/>
-                        <!-- <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체명</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-companyName" id="fixItem-companyName">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체주소</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-companyAddress"
-                                id="fixItem-companyAddress">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">업체상세주소</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-companyDetailAddress"
-                                id="fixItem-companyDetailAddress">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">매장연락처</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-companyContact"
-                                id="fixItem-companyContact">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">등록링크</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-infoUrl" id="fixItem-infoUrl">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">대표핸드폰번호</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-phoneNumber" id="fixItem-phoneNumber">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">운영기간</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-serviceTime" id="fixItem-serviceTime">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">주력메뉴</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-bestMenu" id="fixItem-bestMenu">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">통화한 사람</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-talkPeople" id="fixItem-talkPeople">
-                        <!-- </div>
-                        <div class="input-group input-group-sm mb-3"> -->
-                            <!-- <div class="input-group-prepend"> -->
-                                <div class="modalLabel">담당자 성함</div>
-                            <!-- </div> -->
-                            <input type="text" class="modalInput" name="fixItem-managerName" id="fixItem-managerName">
-                        <!-- </div> -->
+                        <input hidden id="fixItem-id" name="fixItem-id" />
+                        <div class="modalLabel">등록인</div>
+                        <input type="text" class="modalInput" name="fixItem-regEmp" id="fixItem-regEmp">
+                        <div class="modalLabel">업체명</div>
+                        <input type="text" class="modalInput" name="fixItem-companyName" id="fixItem-companyName">
+                        <div class="modalLabel">업체주소</div>
+                        <input type="text" class="modalInput" name="fixItem-companyAddress" id="fixItem-companyAddress">
+                        <div class="modalLabel">업체상세주소</div>
+                        <input type="text" class="modalInput" name="fixItem-companyDetailAddress"
+                            id="fixItem-companyDetailAddress">
+                        <div class="modalLabel">매장연락처</div>
+                        <input type="text" class="modalInput" name="fixItem-companyContact" id="fixItem-companyContact">
+                        <div class="modalLabel">등록링크</div>
+                        <input type="text" class="modalInput" name="fixItem-infoUrl" id="fixItem-infoUrl">
+                        <div class="modalLabel">대표핸드폰번호</div>
+                        <input type="text" class="modalInput" name="fixItem-phoneNumber" id="fixItem-phoneNumber">
+                        <div class="modalLabel">운영기간</div>
+                        <input type="text" class="modalInput" name="fixItem-serviceTime" id="fixItem-serviceTime">
+                        <div class="modalLabel">주력메뉴</div>
+                        <input type="text" class="modalInput" name="fixItem-bestMenu" id="fixItem-bestMenu">
+                        <div class="modalLabel">통화한 사람</div>
+                        <input type="text" class="modalInput" name="fixItem-talkPeople" id="fixItem-talkPeople">
+                        <div class="modalLabel">담당자 성함</div>
+                        <input type="text" class="modalInput" name="fixItem-managerName" id="fixItem-managerName">
                         <div class="form-group">
                             <label for="fixItem-talkDesc">통화내용</label>
                             <textarea class="modalInput" id="fixItem-talkDesc" name="fixItem-talkDesc"
@@ -152,21 +108,22 @@
                             <textarea class="modalInput" id="fixItem-anyDesc" name="fixItem-anyDesc"
                                 rows="3"></textarea>
                         </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn sendBtn">수정하기</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn sendBtn">수정하기</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                </div>
-                </form>
             </div>
         </div>
     </div>
-    
+
 
     <footer th:replace="fragment/footer::footer"></footer>
+    <script th:src="@{/js/listObject.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+    <script th:src="@{/js/listDataConnect.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
     <script th:src="@{/js/list.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+    <script th:src="@{/js/listMain.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
 </body>
 
 </html>
-
-
