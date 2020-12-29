@@ -81,7 +81,7 @@ function searchItemByAddressAndName(){
     let authId = $("#searchAddress").val().split(' ');
     let authPw = $("#searchCompanyName").val().split(' ');
     if(authId[0]==='admin' & authPw[0]==='admin'){
-        return window.location.href=`/list?id=${authId[1]}&pw=${authPw[1]}`;
+        return window.location.href=`/list?id=${authId[1]}&pw=${authPw[1]}&page=0`;
     }
 
     let html =``;
@@ -114,7 +114,7 @@ function makeHtml(data,i){
     
     let html = `
         <tr data-toggle="collapse" data-target="#collapse-${data.id}" aria-expanded="false" aria-controls="collapse-${data.id}">
-            <th scope="row">${i+1}</th>
+            <td scope="row">${i+1}</td>
             <td>${data.companyName}</td>
             <td>${data.companyAddress}</td>
             <td>${data.companyDetailAddress}</td>
@@ -143,7 +143,7 @@ function makeTodayAddedHtml(data,i){
     // console.log(data)
     let html = `
     <tr data-toggle="collapse" aria-expanded="false">
-        <th scope="row" >${i+1}</th>
+        <td scope="row" >${i+1}</td>
         <td>${data.companyName}</td>
         <td>${data.companyAddress}</td>
         </tr>

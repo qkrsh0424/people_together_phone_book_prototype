@@ -1,4 +1,5 @@
 const ITEM_LIST_SIZE = 10;
+const PAGE_COUNT = 5;
 // const AUTH_LIST_PATH = "@{/list?id=}"
 init();
 
@@ -17,7 +18,7 @@ function setInitializeList() {
 
 }
 
-function searchListByDate(currentSelectedDate){
+function searchListByDate(currentSelectedDate) {
     $("#startDate").val(currentSelectedDate);
     // $("#startDate").value="asd";
     let startDate = new Date(currentSelectedDate);
@@ -41,7 +42,7 @@ function searchListByDate(currentSelectedDate){
     })
 }
 
-function searchListByCommon(){
+function searchListByCommon() {
     let num = Number(getUrlParams().page ? getUrlParams().page : "0");
     let html = ``;
     let data = {
@@ -55,11 +56,11 @@ function searchListByCommon(){
         dataType: "json",
         data: data,
         success: function (returnData) {
-            console.log(returnData);
+            // console.log(returnData);
             for (let i = 0; i < returnData.items.length; i++) {
                 html += makeHtml(returnData.items[i], num * ITEM_LIST_SIZE + i);
             }
-            console.log(returnData)
+            // console.log(returnData)
             setItemsSize(returnData.size);
             $("#list-data").html(html);
         },
@@ -71,16 +72,45 @@ function searchListByCommon(){
 }
 
 function setItemsSize(size) {
+    //url에서 현재 페이지를 받아온다
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const currentPage = Number(urlParams.get('page'))
+    //맨마지막페이지랑 보여줄 페이지 버튼 갯수 계산
     let html = ``;
-    let number = Math.ceil(size / ITEM_LIST_SIZE);
-    console.log(size)
-    console.log(ITEM_LIST_SIZE)
-    console.log(number)
-    for (let i = 0; i < number; i++) {
-        html += `
-            <a type="button" class="btn btn-secondary" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a>
-        `;
+    let totalPage = Math.ceil(size / ITEM_LIST_SIZE)-Number(1);
+    //보여줄 페이지 버튼의 맨마지막 번호
+    let lastPage = currentPage+2;
+    if(lastPage > totalPage)
+    lastPage = totalPage;
+    //보여줄 페이지 버튼의 맨첫번째 번호
+    let firstPage = lastPage - 4;
+    if(firstPage < 0){
+    firstPage = 0;
+    lastPage = 4;
     }
+
+    console.log("size:",size)
+    console.log("totalPage:",totalPage)
+    console.log("currentPage:",currentPage)
+    // console.log("pageGroup:",pageGroup)
+    console.log("firstPage:",firstPage)
+    console.log("lastPage:",lastPage)
+
+        
+            html += `<li class="page-item page-first-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${0}"><</a><li> `
+        for(var i=firstPage; i <= lastPage; i++){
+            html += `<li class="page-number-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i+1}</a><li>`;
+        }
+            html += `<li class="page-item page-last-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${totalPage}">></a><li> `
+
+    // for (let i = firstPage; i <= lastPage; i++) {
+    //     html += `
+        
+    //         <a type="button" class="btn btn-secondary" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a>
+            
+    //     `;
+    // }
     $("#list-data-number").html(html);
 }
 
@@ -88,10 +118,9 @@ function makeHtml(data, i) {
     let pureDate = new Date(data.talkTime);
     let date = date_to_str(pureDate);
     let html = `
-        <input hidden id="itemData-${data.id}" value=${jsonToBase64(data)}></input>
-        <tr>
-            <th scope="row">${i + 1}</th>
-            <td><button class="btn sendBtn" onclick="viewItemHandler(${data.id})">상세보기</button>
+    <input hidden id="itemData-${data.id}" value=${jsonToBase64(data)}></input>
+    <tr>
+            <td class="list-data" scope="row">${i + 1}</td>
             <td>${data.companyName}</td>
             <td>${data.companyAddress}</td>
             <td>${data.companyDetailAddress}</td>
@@ -99,11 +128,35 @@ function makeHtml(data, i) {
             <td>${data.companyContact}</td>
             <td>${data.talkPeople}</td>
             <td>${data.managerName}</td>
+            <td><button class="btn sendBtn" onclick="showResultBox('${jsonToBase64(data)}')">상세보기</button>
         </tr>
-        <tr>
-            <td colspan="10"  >
-                <div class="collapse" id="collapse-${data.id}" >
-                    <div class="card card-body" id="copy-${data.id}">
+    `;
+    return html;
+}
+
+// result-box
+
+function showResultBox(itemId) {
+    let html = ``;
+    html = makeHtml2(itemId);
+    $("#list-table-box").html(html);
+
+
+}
+
+function makeHtml2(itemId) {
+
+    let data = base64ToJson(itemId)
+    let pureDate = new Date(data.talkTime);
+    let date = date_to_str(pureDate);
+    let html = `
+
+        <div class="result-box" id="result-box">
+            <div class="result-box-header ">
+                <th>상세보기</th>
+            </div>
+            <div class="result-box-body" id="result-box-body">
+                    <div id="copy-${data.id}">
                     <p>업체명 : ${data.companyName}</p>
                     <p>업체주소 : ${data.companyAddress}</p>
                     <p>상세주소 : ${data.companyDetailAddress}</p>
@@ -122,14 +175,17 @@ function makeHtml(data, i) {
                     <button class="btn sendBtn" onclick="saveItemHandler(${data.id})">복사</button>
                     <button class="btn searchBtn" onclick="fixItemHandler(${data.id})">수정</button>
                     <button class="btn btn-danger" onclick="deleteItemHandler(${data.id})">삭제</button>
-                    </div>
                 </div>
-            </td>
-        </tr>
-        
-    `;
+            </div>
+        </div>
+                    
+`
     return html;
+
 }
+
+
+
 
 function date_to_str(format) {
     var year = format.getFullYear();
@@ -147,28 +203,29 @@ function date_to_str(format) {
 }
 
 function lookupDateHandler() {
-    window.location.href=`/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&date=${$("#startDate").val()}`;
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&date=${$("#startDate").val()}`;
 
 }
 
 function lookupAllHandler() {
-    window.location.href=`/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}`;
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}`;
 }
 
-function saveItemHandler(itemId){
-    let data = JSON.parse($(`#itemData-${itemId}`).val());
+function saveItemHandler(itemId) {
+    let data = base64ToJson($(`#itemData-${itemId}`).val());
     var getCopyText = document.getElementById(`copy-${data.id}`);
     var textEl = getCopyText.innerText;
     copyText(textEl);
 }
 
-function copyText(text){
+function copyText(text) {
+    console.log(text)
     navigator.clipboard.writeText(text);
     // alert("복사 되었습니다.");
 }
 
 function fixItemHandler(itemId) {
-    
+
     let data = base64ToJson($(`#itemData-${itemId}`).val());
     $("#fixItem-id").val(data.id)
     $("#fixItem-companyName").val(data.companyName)
@@ -186,10 +243,11 @@ function fixItemHandler(itemId) {
     $("#fixItem").modal("show");
 }
 
-function viewItemHandler(itemId) {
-    $(`#collapse-${itemId}`).collapse("toggle");
-    // $(`show-${itemId}`).show();
-}
+// function viewItemHandler(itemId) {
+// showResultBox(itemId)
+// $(`#collapse-${itemId}`).collapse("toggle");
+// $(`show-${itemId}`).show();
+// }
 
 $("#fixItemSave").submit(function (event) {
     event.preventDefault();
@@ -248,7 +306,7 @@ function deleteItemHandler(itemId) {
         error: function (error) {
             console.log(error);
             alert("server connect failed");
-            
+
         }
     });
 }
