@@ -121,7 +121,7 @@ function makeHtml2(itemId) {
                         <p>반론,질문 : ${data.anyDesc}</p>
                     </div>
                     <div class="modal-footer">
-                    <button class="btn sendBtn" onclick="saveItemHandler(${data.id})">복사</button>
+                    <button class="btn sendBtn" onclick="copyItemHandler(${data.id})">복사</button>
                     <button class="btn searchBtn" onclick="fixItemHandler(${data.id})">수정</button>
                     <button class="btn btn-danger" onclick="deleteItemHandler(${data.id})">삭제</button>
                 </div>
@@ -164,16 +164,22 @@ function lookupAllHandler() {
     window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}`;
 }
 
-function saveItemHandler(itemId) {
+function copyItemHandler(itemId) {
     let data = base64ToJson($(`#itemData-${itemId}`).val());
     var getCopyText = document.getElementById(`copy-${data.id}`);
-    var textEl = getCopyText.innerText;
-    copyText(textEl);
+    var t = document.createElement("textarea");
+    document.body.appendChild(t);
+    t.value = getCopyText.innerText;
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+    // var textEl = getCopyText.innerText;
+    // copyText(textEl);
 }
 
-function copyText(text) {
-    navigator.clipboard.writeText(text);
-}
+// function copyText(text) {
+//     navigator.clipboard.writeText(text);
+// }
 
 function fixItemHandler(itemId) {
 
