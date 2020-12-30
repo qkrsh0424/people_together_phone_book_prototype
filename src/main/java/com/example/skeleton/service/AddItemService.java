@@ -19,7 +19,7 @@ public class AddItemService {
     @Autowired
     ItemRepository itemRepository;
 
-    private int ITEM_LIST_SIZE = 5;
+    private int ITEM_LIST_SIZE = 20;
 
     public void addItem(AddItemDTO addItemDto){
         ItemEntity item = setAddItemEntity(addItemDto);

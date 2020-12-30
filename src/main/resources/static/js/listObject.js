@@ -1,4 +1,4 @@
 function listObjectInit(){
-    ITEM_LIST_SIZE = 5;
+    ITEM_LIST_SIZE = 20;
     ITEMS = [];
 }
