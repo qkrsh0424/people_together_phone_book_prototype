@@ -18,7 +18,7 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long>{
     @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND company_full_address LIKE CONCAT('%',:aa,'%') ORDER BY created_at DESC", nativeQuery=true)
     List<ItemEntity> findByCompa(String aa, int deleted);
 
-    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND talk_time BETWEEN :start AND :end ORDER BY created_at DESC", nativeQuery=true)
+    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND created_at BETWEEN :start AND :end ORDER BY created_at DESC", nativeQuery=true)
     List<ItemEntity> findItemByDate(Date start, Date end, int deleted);
 
     @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND company_full_address LIKE CONCAT('%',:address,'%') AND company_name LIKE CONCAT('%',:name,'%') ORDER BY created_at DESC", nativeQuery=true)

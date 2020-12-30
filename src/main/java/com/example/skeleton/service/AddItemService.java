@@ -102,7 +102,10 @@ public class AddItemService {
         Calendar c = Calendar.getInstance();
         c.setTime(start);
         c.add(Calendar.DATE, 1);
+        c.add(Calendar.SECOND, -1);
         Date end = c.getTime();
+        // System.out.println(start);
+        // System.out.println(end);
         return itemRepository.findItemByDate(start,end, 0);
     }
 

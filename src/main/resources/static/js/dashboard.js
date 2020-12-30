@@ -156,7 +156,10 @@ function makeTodayAddedHtml(data,i){
 
 function lookupAddedTodayHandler(){
     let html =``;
-    let startDate = new Date($("#startDate").val());
+    let startDate = new Date();
+    startDate.setHours(00);
+    startDate.setMinutes(00);
+    startDate.setSeconds(00);
     let data = {
         "date":startDate.toUTCString()
     };
@@ -165,7 +168,7 @@ function lookupAddedTodayHandler(){
         type:"GET",
         contentType:"application/json",
         dataType:"json",
-        // data:data,
+        data:data,
         success:function(returnData){
             // console.log(returnData);
             for(let i = 0 ; i < returnData.length; i++){

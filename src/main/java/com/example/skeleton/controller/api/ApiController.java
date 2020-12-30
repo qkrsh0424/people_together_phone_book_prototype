@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import com.example.skeleton.model.DTO.AddItemDTO;
 import com.example.skeleton.model.DTO.DeleteItemDTO;
@@ -65,13 +66,17 @@ public class ApiController {
         return items;
     }
 
+    // /api/get/list/addbytoday
     @GetMapping(value = "/get/list/addbytoday")
-    public List<ItemEntity> getItemsAddByToday(){
-        Calendar cc = Calendar.getInstance();
-        cc.set(Calendar.HOUR, 00);
-        cc.set(Calendar.MINUTE, 00);
-        cc.set(Calendar.SECOND, 00);
-        Date startDate = cc.getTime();
+    public List<ItemEntity> getItemsAddByToday(@RequestParam("date") Date startDate){
+        // Calendar cc = Calendar.getInstance();
+        // System.out.println(cc);
+        // cc.setTimeZone(TimeZone.getTimeZone("UTC"));
+        // cc.set(Calendar.HOUR, 00);
+        // cc.set(Calendar.MINUTE, 00);
+        // cc.set(Calendar.SECOND, 00);
+        // cc.add(Calendar.HOUR, -12);
+        // Date startDate = cc.getTime();
         List<ItemEntity> items = addItemService.getItemsByDate(startDate);
         return items;
     }
