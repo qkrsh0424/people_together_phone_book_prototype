@@ -19,6 +19,9 @@ public class ItemEntity {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(name = "user_id")
+    private String userId;
+    
     @Column(name = "reg_emp")
     private String regEmp;
     @Column(name = "company_name")

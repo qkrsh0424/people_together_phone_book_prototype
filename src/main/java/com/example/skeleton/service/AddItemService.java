@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.skeleton.model.DTO.AddItemDTO;
 import com.example.skeleton.model.DTO.DeleteItemDTO;
 import com.example.skeleton.model.DTO.UpdateItemDTO;
+import com.example.skeleton.model.DTO.UserLoginSessionDTO;
+import com.example.skeleton.model.VO.UserInfoVO;
 import com.example.skeleton.model.entity.ItemEntity;
 import com.example.skeleton.model.repository.ItemRepository;
 
@@ -21,8 +25,9 @@ public class AddItemService {
 
     private int ITEM_LIST_SIZE = 20;
 
-    public void addItem(AddItemDTO addItemDto){
-        ItemEntity item = setAddItemEntity(addItemDto);
+    public void addItem(UserLoginSessionDTO user, AddItemDTO addItemDto){
+
+        ItemEntity item = setAddItemEntity(user, addItemDto);
         itemRepository.save(item);
     }
 
@@ -58,12 +63,13 @@ public class AddItemService {
         });
     }
 
-    public ItemEntity setAddItemEntity(AddItemDTO addItemDto){
+    public ItemEntity setAddItemEntity(UserLoginSessionDTO user, AddItemDTO addItemDto){
         ItemEntity addItemEntity = new ItemEntity();
 
         Calendar currentCalendar = Calendar.getInstance();
         Date currentDate = currentCalendar.getTime();
         
+        addItemEntity.setUserId(user.getId());
         addItemEntity.setRegEmp(addItemDto.getRegEmp());
         addItemEntity.setCompanyName(addItemDto.getCompanyName());
         addItemEntity.setCompanyAddress(addItemDto.getCompanyAddress());
@@ -84,18 +90,54 @@ public class AddItemService {
         return addItemEntity;
     }
 
-    public List<ItemEntity> getItemsAll(){
-        return itemRepository.customFindAll(0);
+    public List<ItemEntity> getItemsAll(String startDateStr, String memberName){
+        Date startDate = null;
+        Date endDate = null;
+        if(startDateStr.equals("none")){
+            startDate = null;
+            endDate = null;
+        }else{
+            startDate = new Date(startDateStr);
+            Calendar c = Calendar.getInstance();
+            c.setTime(startDate);
+            c.add(Calendar.DATE, 1);
+            c.add(Calendar.SECOND, -1);
+            endDate = c.getTime();
+        }
+        return itemRepository.customFindAll(startDate, endDate, memberName, 0);
     }
 
-    public List<ItemEntity> getItemsByNumber(int number){
+    public List<ItemEntity> getItemsByNumber(int number, String startDateStr, String memberName){
+        
         int startNum = number * ITEM_LIST_SIZE;
         int endNum = ITEM_LIST_SIZE;
-        return itemRepository.findItemByListNumber(startNum, endNum, 0);
+        Date startDate = null;
+        Date endDate = null;
+        if(startDateStr.equals("none")){
+            startDate = null;
+            endDate = null;
+        }else{
+            startDate = new Date(startDateStr);
+            Calendar c = Calendar.getInstance();
+            c.setTime(startDate);
+            c.add(Calendar.DATE, 1);
+            c.add(Calendar.SECOND, -1);
+            endDate = c.getTime();
+        }
+        return itemRepository.findItemByListNumber(startNum, endNum, startDate, endDate, memberName, 0);
     }
 
-    public int getItemsCount(){
-        return itemRepository.customFindAll(0).size();
+    // public int getItemsCount(){
+    //     return itemRepository.customFindAll(0).size();
+    // }
+
+    public List<ItemEntity> getItemsByUserAndDate(UserLoginSessionDTO user ,Date start){
+        Calendar c = Calendar.getInstance();
+        c.setTime(start);
+        c.add(Calendar.DATE, 1);
+        c.add(Calendar.SECOND, -1);
+        Date end = c.getTime();
+        return itemRepository.findItemByUserAndDate(user.getId() ,start,end, 0);
     }
 
     public List<ItemEntity> getItemsByDate(Date start){
@@ -104,8 +146,6 @@ public class AddItemService {
         c.add(Calendar.DATE, 1);
         c.add(Calendar.SECOND, -1);
         Date end = c.getTime();
-        // System.out.println(start);
-        // System.out.println(end);
         return itemRepository.findItemByDate(start,end, 0);
     }
 

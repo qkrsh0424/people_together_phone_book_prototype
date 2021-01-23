@@ -7,7 +7,7 @@ function loadTableHtml(){
 }
 
 function setItemsSize(size) {
-    console.log(size);
+    // console.log(size);
     //url에서 현재 페이지를 받아온다
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
@@ -32,17 +32,16 @@ function setItemsSize(size) {
     // console.log("firstPage:", firstPage)
     // console.log("lastPage:", lastPage)
 
-
-    html += `<li class="page-item page-first-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${0}"><i class="fas fa-angle-double-left"></i></a><li> `
+    html += `<li class="page-item page-first-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${0}&date=${getUrlParams().date ? getUrlParams().date : ''}&name=${getUrlParams().name ? getUrlParams().name : ''}"><i class="fas fa-angle-double-left"></i></a><li> `
     for (var i = firstPage; i <= lastPage; i++) {
         if(currentPage==i){
-            html += `<li class="page-number-item"><a type="button" class="btn pageBtn text-danger" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a><li>`;    
+            html += `<li class="page-number-item"><a type="button" class="btn pageBtn text-danger" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}&date=${getUrlParams().date ? getUrlParams().date : ''}&name=${getUrlParams().name ? getUrlParams().name : ''}">${i + 1}</a><li>`;    
         }else{
-            html += `<li class="page-number-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}">${i + 1}</a><li>`;
+            html += `<li class="page-number-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${i}&date=${getUrlParams().date ? getUrlParams().date : ''}&name=${getUrlParams().name ? getUrlParams().name : ''}">${i + 1}</a><li>`;
         }
             
     }
-    html += `<li class="page-item page-last-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${totalPage}"><i class="fas fa-angle-double-right"></i></a><li> `
+    html += `<li class="page-item page-last-item"><a type="button" class="btn pageBtn" href="/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=${totalPage}&date=${getUrlParams().date ? getUrlParams().date : ''}&name=${getUrlParams().name ? getUrlParams().name : ''}"><i class="fas fa-angle-double-right"></i></a><li> `
 
     $("#list-data-number").html(html);
     pagenationNum(currentPage+1, totalPage+1);
@@ -159,9 +158,13 @@ function lookupDateHandler() {
     window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&date=${$("#startDate").val()}`;
 
 }
+function lookupDetailHandler(){
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=${$('#startDate').val()}&name=${$('#memberName').val()}`;
+}
 
 function lookupAllHandler() {
-    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}`;
+    // console.log($("#startDate").val())
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=&name=`;
 }
 
 function copyItemHandler(itemId) {

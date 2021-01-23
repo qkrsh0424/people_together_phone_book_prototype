@@ -11,3 +11,7 @@ function base64ToJson(str){
     // **base64 -> URI -> String -> JSON**
     return JSON.parse(decodeURIComponent(escape(atob(str))).toString());
 }
+
+function hrefRouting(href){
+    window.location.href=href
+}

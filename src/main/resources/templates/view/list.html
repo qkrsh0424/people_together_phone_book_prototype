@@ -5,62 +5,70 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 
 <body>
-    <div class="list-container" id="list-container">
-        <div class="text-center">
-            <p class="textLogo" style="font-size: 36px;">People Together Admin Page</p>
-        </div>
-        <div class="date-box">
-            <input class="form-control searchInput mx-2" type="date" name="startDate" id="startDate">
-            <button class="btn viewBtn mr-2" type="button" onclick="lookupDateHandler()">조회</button>
-            <button class="btn sendBtn " type="button" onclick="lookupAllHandler()">모두조회</button>
-        </div>
-    </div>
-    <div class="row m-2">
-        <div class="col-sm-8 col-xs-12">
-            <div class="table-responsive list-table-box">
-                <table class="table list-table text-center">
-                    <thead>
-                        <tr>
-                            <th scope="row">#</th>
-                            <th scope="col">기능</th>
-                            <th scope="col">등록인</th>
-                            <th scope="col">업체명</th>
-                            <th scope="col">업체주소</th>
-                            <th scope="col">상세주소</th>
-                            <th scope="col">대표핸드폰번호</th>
-                            <th scope="col">매장연락처</th>
-                            <th scope="col">통화한사람</th>
-                            <th scope="col">담당자성함</th>
-                        </tr>
-                    </thead>
-                    <tbody class="admin-list-data admin-list-data" id="list-data">
-                    </tbody>
-                </table>
+    <div style="margin-bottom: 100px;">
+        <div class="list-container" id="list-container">
+            <div class="text-center">
+                <p class="textLogo" style="font-size: 36px;">People Together Admin Page</p>
+            </div>
+            <div class="date-box">
+                <input class="form-control searchInput mx-2" type="date" name="startDate" id="startDate">
+                <input class="form-control searchInput mx-2" type="text" name="memberName" id="memberName" placeholder="등록인 이름">
+                <button class="btn viewBtn mr-2" type="button" onclick="lookupDetailHandler()">조회</button>
+                <button class="btn sendBtn " type="button" onclick="lookupAllHandler()">모두조회</button>
             </div>
         </div>
-        <div class="col-sm-4 col-xs-12">
-
-            <div class="list-table-box" id="list-table-box">
-                <div class="result-logo-box">
-                    <div class="result-logo">
-                        <h1>PEOPLE TOGETHER</h1>
-                    </div>
+        <div class="row m-2">
+            <div class="col-sm-8 col-xs-12">
+                <div class="table-responsive list-table-box">
+                    <table class="table list-table text-center">
+                        <thead>
+                            <tr>
+                                <th scope="row">#</th>
+                                <th scope="col">기능</th>
+                                <th scope="col">등록인</th>
+                                <th scope="col">업체명</th>
+                                <th scope="col">업체주소</th>
+                                <th scope="col">상세주소</th>
+                                <th scope="col">대표핸드폰번호</th>
+                                <th scope="col">매장연락처</th>
+                                <th scope="col">통화한사람</th>
+                                <th scope="col">담당자성함</th>
+                            </tr>
+                        </thead>
+                        <tbody class="admin-list-data admin-list-data" id="list-data">
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <div class="col-sm-4 col-xs-12">
+
+                <div class="list-table-box" id="list-table-box">
+                    <div class="result-logo-box">
+                        <div class="result-logo">
+                            <h1>PEOPLE TOGETHER</h1>
+                        </div>
+                    </div>
+                </div>
 
 
+            </div>
+        </div>
+        <div class="pagination-box">
+            <div>
+                <ul class="pagination page-btn-group" id="list-data-number">
+                </ul>
+                <span id="i_list_data_number_of"></span>
+            </div>
         </div>
     </div>
-    <div class="pagination-box">
-        <div>
-            <ul class="pagination page-btn-group" id="list-data-number">
-            </ul>
-            <span id="i_list_data_number_of"></span>
-        </div>
+    <div class="fixed-navgator-group">
+        <a class="fixed-navgator-control" href="/"><i class="fas fa-home"></i></a>
+        <a class="fixed-navgator-control" href="/list?id=cGVvdG8=&pw=cGVvdG8=&page=0&date=&name="><i class="fas fa-users-cog"></i></a>
+        <a class="fixed-navgator-control" href="/signup"><i class="fas fa-user-plus"></i></a>
+        <a class="fixed-navgator-control" href="/memberlist"><i class="far fa-address-book"></i></a>
     </div>
-
-    <a class="list_goback" href="/"><i class="fas fa-home"></i></a>
-    </div>
+    
+    
 
     <!-- Modal -->
     <div class="modal fade" id="fixItem" tabindex="-1" aria-labelledby="fixItemLabel" aria-hidden="true">
@@ -76,7 +84,7 @@
                     <form id="fixItemSave">
                         <input hidden id="fixItem-id" name="fixItem-id" />
                         <div class="modalLabel">등록인</div>
-                        <input type="text" class="modalInput" name="fixItem-regEmp" id="fixItem-regEmp">
+                        <input type="text" class="modalInput" name="fixItem-regEmp" id="fixItem-regEmp" disabled>
                         <div class="modalLabel">업체명</div>
                         <input type="text" class="modalInput" name="fixItem-companyName" id="fixItem-companyName">
                         <div class="modalLabel">업체주소</div>
@@ -117,7 +125,7 @@
             </div>
         </div>
     </div>
-
+    <input hidden id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
     <footer th:replace="fragment/footer::footer"></footer>
     <script th:src="@{/js/listObject.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>

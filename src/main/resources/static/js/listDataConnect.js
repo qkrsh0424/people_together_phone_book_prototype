@@ -18,8 +18,14 @@ async function searchListByDate(currentSelectedDate) {
 
 async function searchListByCommon() {
     let num = Number(getUrlParams().page ? getUrlParams().page : "0");
+    let startDate = getUrlParams().date;
+    let name = decodeURIComponent(getUrlParams().name);
+    $("#startDate").val(startDate);
+    $("#memberName").val(name)
     let data = {
-        "number": num
+        "number": num,
+        "date": startDate ? new Date(startDate).toUTCString() : 'none',
+        "name": name ? name : ''
     }
 
     await $.ajax({
@@ -64,6 +70,9 @@ $("#fixItemSave").submit(function (event) {
         contentType: "application/json",
         dataType: "json",
         data: data,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("X-XSRF-TOKEN", $("#_csrf").val());
+        },
         success: function (returnData) {
             if (returnData.message === 'success') {
                 alert("수정되었습니다.");
@@ -87,6 +96,9 @@ async function deleteItemOne(itemId) {
         contentType: "application/json",
         dataType: "json",
         data: data,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("X-XSRF-TOKEN", $("#_csrf").val());
+        },
         success: function (returnData) {
             if (returnData.message === 'success') {
                 alert("삭제되었습니다.");

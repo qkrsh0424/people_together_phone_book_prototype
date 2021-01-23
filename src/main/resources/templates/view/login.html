@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<!-- header GET -->
+
+<head th:replace="fragment/header2::header"></head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center p-3 m-5">People Togehter</h1>
+        <form action="LOGIN" method="post" id="LOGIN" class="p-2 m-2">
+            <input hidden id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <div class="form-group">
+                <label for="username">NAME</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">PASSWORD</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+
+    <!-- footer GET -->
+    <footer th:replace="fragment/footer::footer"></footer>
+    <script src="/js/auth/login.js"></script>
+</body>
+
+</html>

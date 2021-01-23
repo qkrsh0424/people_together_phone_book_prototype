@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragment/header2::header"></head>
+
+<body>
+    <div class="container memberlist-table-box">
+        <h4 style="margin-left: 15px;">관리자 리스트</h4>
+        <div class="table-responsive text-center">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">이름 아이디</th>
+                        <th scope="col">등록 개수</th>
+                        <th scope="col">Handler</th>
+                    </tr>
+                </thead>
+                <tbody id="i_admin_table_body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="container memberlist-table-box">
+        <h4 style="margin-left: 15px;">직원 리스트</h4>
+        <div class="table-responsive text-center">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">이름 아이디</th>
+                        <th scope="col">등록 개수</th>
+                        <th scope="col">Handler</th>
+                    </tr>
+                </thead>
+                <tbody id="i_member_table_body">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="i_adminPageModal" tabindex="-1" aria-labelledby="adminPageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" id='i_adminPageModalDialog'>
+        </div>
+    </div>
+    <div class="fixed-navgator-group">
+        <a class="fixed-navgator-control" href="/"><i class="fas fa-home"></i></a>
+        <a class="fixed-navgator-control" href="/list?id=cGVvdG8=&pw=cGVvdG8=&page=0&date=&name="><i class="fas fa-users-cog"></i></a>
+        <a class="fixed-navgator-control" href="/signup"><i class="fas fa-user-plus"></i></a>
+        <a class="fixed-navgator-control" href="/memberlist"><i class="far fa-address-book"></i></a>
+    </div>
+    <input hidden id="_csrf" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+</body>
+<footer th:replace="fragment/footer::footer"></footer>
+<script
+    th:src="@{/js/memberlist/memberListObject.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+<script
+    th:src="@{/js/memberlist/memberListDataConnect.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+<script
+    th:src="@{/js/memberlist/memberListHtml.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+<script
+    th:src="@{/js/memberlist/memberListEventHandler.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+<script
+    th:src="@{/js/memberlist/memberListMain.js?version=}+${@environment.getProperty('app.environment.static.version')}"></script>
+
+</html>

@@ -1,0 +1,4 @@
+function memberListObjectInit(){
+    MEMBERS = []
+    ADMINS = []
+}
