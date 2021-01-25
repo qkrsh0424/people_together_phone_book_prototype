@@ -16,7 +16,7 @@ import org.springframework.session.web.http.CookieSerializer;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60*60)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 6*60*60)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Value("${spring.redis.host}")
     private String redisAddress;
