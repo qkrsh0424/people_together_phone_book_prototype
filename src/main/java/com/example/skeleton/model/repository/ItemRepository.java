@@ -15,8 +15,8 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long>{
     // @Query(value = "SELECT * FROM items WHERE deleted=:deleted ORDER BY created_at DESC", nativeQuery=true)
     // List<ItemEntity> customFindAll(int deleted);
 
-    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND created_at BETWEEN IFNULL(:startDate, \"1900-01-01\") AND IFNULL (:endDate, now()) AND reg_emp LIKE CONCAT('%',:name,'%') ORDER BY created_at DESC", nativeQuery=true)
-    List<ItemEntity> customFindAll(Date startDate, Date endDate, String name, int deleted);
+    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND created_at BETWEEN IFNULL(:startDate, \"1900-01-01\") AND IFNULL (:endDate, now()) AND reg_emp LIKE CONCAT('%',:name,'%') AND company_name LIKE CONCAT('%',:companyName,'%') ORDER BY created_at DESC", nativeQuery=true)
+    List<ItemEntity> customFindAll(Date startDate, Date endDate, String name, String companyName, int deleted);
 
     @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND company_full_address LIKE CONCAT('%',:aa,'%') ORDER BY created_at DESC", nativeQuery=true)
     List<ItemEntity> findByCompa(String aa, int deleted);
@@ -33,6 +33,6 @@ public interface ItemRepository extends JpaRepository<ItemEntity, Long>{
     // @Query(value = "SELECT * FROM items WHERE deleted=:deleted ORDER BY created_at DESC LIMIT :startNum, :endNum", nativeQuery=true)
     // List<ItemEntity> findItemByListNumber(int startNum, int endNum, int deleted);
 
-    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND created_at BETWEEN IFNULL(:startDate, \"1900-01-01\") AND IFNULL (:endDate, now()) AND reg_emp LIKE CONCAT('%',:name,'%') ORDER BY created_at DESC LIMIT :startNum, :endNum", nativeQuery=true)
-    List<ItemEntity> findItemByListNumber(int startNum, int endNum, Date startDate, Date endDate, String name, int deleted);
+    @Query(value = "SELECT * FROM items WHERE deleted=:deleted AND created_at BETWEEN IFNULL(:startDate, \"1900-01-01\") AND IFNULL (:endDate, now()) AND reg_emp LIKE CONCAT('%',:name,'%') AND company_name LIKE CONCAT('%',:companyName,'%') ORDER BY created_at DESC LIMIT :startNum, :endNum", nativeQuery=true)
+    List<ItemEntity> findItemByListNumber(int startNum, int endNum, Date startDate, Date endDate, String name, String companyName, int deleted);
 }

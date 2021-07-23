@@ -159,12 +159,12 @@ function lookupDateHandler() {
 
 }
 function lookupDetailHandler(){
-    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=${$('#startDate').val()}&name=${$('#memberName').val()}`;
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=${$('#startDate').val()}&name=${$('#memberName').val()}&company=${$('#companyName').val()}`;
 }
 
 function lookupAllHandler() {
     // console.log($("#startDate").val())
-    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=&name=`;
+    window.location.href = `/list?id=${getUrlParams().id}&pw=${getUrlParams().pw}&page=0&date=&name=&company=`;
 }
 
 function copyItemHandler(itemId) {

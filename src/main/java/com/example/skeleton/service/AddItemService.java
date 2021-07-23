@@ -90,7 +90,7 @@ public class AddItemService {
         return addItemEntity;
     }
 
-    public List<ItemEntity> getItemsAll(String startDateStr, String memberName){
+    public List<ItemEntity> getItemsAll(String startDateStr, String memberName, String companyName){
         Date startDate = null;
         Date endDate = null;
         if(startDateStr.equals("none")){
@@ -104,10 +104,10 @@ public class AddItemService {
             c.add(Calendar.SECOND, -1);
             endDate = c.getTime();
         }
-        return itemRepository.customFindAll(startDate, endDate, memberName, 0);
+        return itemRepository.customFindAll(startDate, endDate, memberName, companyName, 0);
     }
 
-    public List<ItemEntity> getItemsByNumber(int number, String startDateStr, String memberName){
+    public List<ItemEntity> getItemsByNumber(int number, String startDateStr, String memberName, String companyName){
         
         int startNum = number * ITEM_LIST_SIZE;
         int endNum = ITEM_LIST_SIZE;
@@ -124,7 +124,7 @@ public class AddItemService {
             c.add(Calendar.SECOND, -1);
             endDate = c.getTime();
         }
-        return itemRepository.findItemByListNumber(startNum, endNum, startDate, endDate, memberName, 0);
+        return itemRepository.findItemByListNumber(startNum, endNum, startDate, endDate, memberName, companyName, 0);
     }
 
     // public int getItemsCount(){

@@ -20,14 +20,20 @@ async function searchListByCommon() {
     let num = Number(getUrlParams().page ? getUrlParams().page : "0");
     let startDate = getUrlParams().date;
     let name = decodeURIComponent(getUrlParams().name);
+    let company = getUrlParams().company ? decodeURIComponent(getUrlParams().company) : '';
+
     $("#startDate").val(startDate);
-    $("#memberName").val(name)
+    $("#memberName").val(name);
+    $("#companyName").val(company);
+
     let data = {
         "number": num,
         "date": startDate ? new Date(startDate).toUTCString() : 'none',
-        "name": name ? name : ''
+        "name": name ? name : '',
+        "company": company ? company : ''
     }
 
+    // TODO : companyName 서버 통신 작성.
     await $.ajax({
         url: "/api/get/list/bynum",
         type: "GET",

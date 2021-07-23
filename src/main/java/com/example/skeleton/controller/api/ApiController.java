@@ -55,9 +55,14 @@ public class ApiController {
     // }
 
     @GetMapping(value = "/get/list/bynum")
-    public ItemListDTO getAllItemsByNum(@RequestParam("number") int number, @RequestParam(name = "date") String startDateStr, @RequestParam(name = "name") String memberName){
-        List<ItemEntity> itemList = addItemService.getItemsByNumber(number, startDateStr, memberName);
-        int itemSize = addItemService.getItemsAll(startDateStr, memberName).size();
+    public ItemListDTO getAllItemsByNum(
+            @RequestParam("number") int number, 
+            @RequestParam(name = "date") String startDateStr, 
+            @RequestParam(name = "name") String memberName,
+            @RequestParam(name = "company") String companyName
+        ){
+        List<ItemEntity> itemList = addItemService.getItemsByNumber(number, startDateStr, memberName, companyName);
+        int itemSize = addItemService.getItemsAll(startDateStr, memberName, companyName).size();
         ItemListDTO items = new ItemListDTO();
         items.setItems(itemList);
         items.setSize(itemSize);
